@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 
 function randomNumber(max) {
@@ -7,8 +7,8 @@ function randomNumber(max) {
 
 const Img = styled.img`
   position: absolute;
-  width: 50vw;
-  height: 50vh;
+  width: 50%;
+  height: 50%;
   top: ${props => props.top}%;
   left: ${props => props.left}%;
   z-index: -999;
@@ -16,7 +16,7 @@ const Img = styled.img`
 
 function Pipe() {
   const audio = new Audio("/sounds/pipe.mp3");
-  const [pipeCount, setPipeCount] = useState(0);
+  //   const [pipeCount, setPipeCount] = useState(0);
   const [elList, setElList] = useState([]);
 
   //   audio.addEventListener("playing", () => setIsPlaying(true));
@@ -25,8 +25,9 @@ function Pipe() {
   const startAnimation = () => {
     audio.play();
 
-    setPipeCount(pipeCount + 1);
-    setElList([
+    const id = Math.random();
+    // setPipeCount(pipeCount => pipeCount + 1);
+    setElList(elList => [
       ...elList,
       <Img
         className="fadeout-medium"
@@ -34,36 +35,23 @@ function Pipe() {
         left={randomNumber(50)}
         src="/images/pipe.jpeg"
         alt="SKIBIDI PIPE"
-        key={pipeCount}
+        key={id}
       />,
     ]);
 
-    // Optionally, set a timeout to reset the visibility state
-    // if you want to be able to play the animation again later
     setTimeout(() => {
       setElList(elList => elList.slice(1));
-    }, 5000);
+    }, 10000);
   };
 
-  return (
-    <>
-      <button onClick={startAnimation}>
-        {/* {isPlaying ? "Stop Sound" : "Play Sound"} */}
-        METAL PIPE
-      </button>
-      {elList}
-      {/* {[
-        <Img
-          className="fadeout-medium"
-          top={randomNumber(90)}
-          left={randomNumber(90)}
-          src="/images/pipe.jpeg"
-          alt="SKIBIDI PIPE"
-          key={pipeCount}
-        />,
-      ]} */}
-    </>
-  );
+  useEffect(() => {
+    document.addEventListener("click", startAnimation);
+    return () => {
+      document.removeEventListener("click", startAnimation);
+    };
+  }, []);
+
+  return <>{elList}</>;
 }
 
 export default Pipe;
