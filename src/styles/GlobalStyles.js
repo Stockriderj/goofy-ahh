@@ -12,9 +12,9 @@ const GlobalStyles = createGlobalStyle`
   to { opacity: 0; }
 }
 
-.fadeout-short {animation: fadeOut 0.3s linear forwards;}
-.fadeout-medium {animation: fadeOut 1s linear forwards;}
-.fadeout-long {animation: fadeOut 3s linear forwards;}
+.fadeout-short {animation: fadeOut 0.3s ease-out 0.2s forwards;}
+.fadeout-medium {animation: fadeOut 1s ease-out 0.2s forwards;}
+.fadeout-long {animation: fadeOut 3s ease-out 0.2s forwards;}
 
 `;
 
