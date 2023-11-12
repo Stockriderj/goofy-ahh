@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import Pipe from "./components/Pipe";
 import GlobalStyles from "./styles/GlobalStyles";
@@ -16,12 +17,29 @@ const Footer = styled.footer`
 `;
 
 function App() {
+  const [elList, setElList] = useState([]);
+
+  const startAnimation = () => {
+    const id = Math.random();
+    // setPipeCount(pipeCount => pipeCount + 1);
+    setElList(elList => [...elList, <Pipe key={id} />]);
+
+    setTimeout(() => {
+      setElList(elList => elList.slice(1));
+    }, 2000);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", startAnimation);
+    return () => {
+      document.removeEventListener("click", startAnimation);
+    };
+  }, []);
+
   return (
     <>
       <GlobalStyles />
-      <Container>
-        <Pipe />
-      </Container>
+      <Container>{elList};</Container>
       <Footer>
         <p>&copy; stockriderj 2023</p>
       </Footer>

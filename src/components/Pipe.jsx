@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect} from "react";
 import styled from "styled-components";
 
 function randomNumber(max) {
@@ -15,43 +15,24 @@ const Img = styled.img`
 `;
 
 function Pipe() {
-  const audio = new Audio("/sounds/pipe.mp3");
   //   const [pipeCount, setPipeCount] = useState(0);
-  const [elList, setElList] = useState([]);
 
   //   audio.addEventListener("playing", () => setIsPlaying(true));
   //   audio.addEventListener("ended", () => setIsPlaying(false));
 
-  const startAnimation = () => {
-    audio.play();
-
-    const id = Math.random();
-    // setPipeCount(pipeCount => pipeCount + 1);
-    setElList(elList => [
-      ...elList,
-      <Img
-        className="fadeout-medium"
-        top={randomNumber(50)}
-        left={randomNumber(50)}
-        src="/images/pipe.jpeg"
-        alt="SKIBIDI PIPE"
-        key={id}
-      />,
-    ]);
-
-    setTimeout(() => {
-      setElList(elList => elList.slice(1));
-    }, 10000);
-  };
-
   useEffect(() => {
-    document.addEventListener("click", startAnimation);
-    return () => {
-      document.removeEventListener("click", startAnimation);
-    };
+    new Audio("/sounds/pipe.mp3").play();
   }, []);
 
-  return <>{elList}</>;
+  return (
+    <Img
+      className="fadeout-medium"
+      top={randomNumber(50)}
+      left={randomNumber(50)}
+      src="/images/pipe.jpeg"
+      alt="SKIBIDI PIPE"
+    />
+  );
 }
 
 export default Pipe;
